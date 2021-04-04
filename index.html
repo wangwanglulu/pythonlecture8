@@ -1,0 +1,823 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lecture 8</title>
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/white.css">
+    <link rel="stylesheet" href="css/theme/custom.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/googlecode.css">
+    <!-- Printing and PDF exports -->
+    <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal" style="background-color: #fff;">
+        <div class="slides">
+            <section data-background-video="bgm.mp4" data-background-video-loop data-background-video-muted style="text-align: left;">
+                <h2 style="color: white">Python Programming</h2>
+                <h5 style="color: white">Lecture 8 Advanced Features</h5>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">8.1 Additional Python Conveniences</h2>
+                </section>
+                <section>
+                    <h5>Comprehension Syntax</h5>
+                    <ul>
+                        <li class="fragment">
+                            <p>Four ways of creating a list</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def test1():
+    l = []
+    for i in range(100):
+        l = l + [i]
+
+def test2():
+    l = []
+    for i in range(100):
+        l.append(i)
+
+def test3():
+    l = list(range(100))
+
+def test4():
+    l = [i for i in range(100)]
+</code></pre>
+                    </div>
+                    <p class="fragment">[ expression <b>for</b> value <b>in</b> iterable <b>if</b> condition ]</p>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> [x * x for x in range(1, 11)]
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> [x * x for x in range(1, 11) if x % 2 == 0]
+[4, 16, 36, 64, 100]
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> [m + n for m in 'ABC' for n in 'XYZ']
+['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> d = {'x': 'A', 'y': 'B', 'z': 'C' }
+>>> [k + '=' + v for k, v in d.items()]
+['y=B', 'x=A', 'z=C']
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> L = ['Hello', 'World', 'IBM', 'Apple']
+>>> [s.lower() for s in L]
+['hello', 'world', 'ibm', 'apple']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>map()</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def f(x):
+    return x * x
+
+y = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])    
+print(list(y))
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> print(list(map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9])))
+['1', '2', '3', '4', '5', '6', '7', '8', '9']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <h3>Anonymous function: lambda</h3>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def add( x, y ):
+    return x + y
+ 
+lambda x, y: x + y
+ 
+lambda x, y = 2: x + y
+lambda *z: z
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+ 
+>>> a = lambda x, y: x + y
+>>> a( 1, 3 )
+4
+>>> b = lambda x, y = 2: x + y
+>>> b( 1 )
+3
+>>> b( 1, 3 )
+4
+>>> c = lambda *z: z
+>>> c( 10, 'test')
+(10, 'test')
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Sometimes the anonymous function is convenient.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>It has only one expression. (You do not have to use <b>return</b>)</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+sum = lambda arg1, arg2: arg1 + arg2
+
+print ("The total is : ", sum( 10, 20 ))
+print ("The total is : ", sum( 20, 20 ))
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">8.2 Iterators and Generators</h2>
+                </section>
+                <section>
+                    <h5>Iterator</h5>
+                    <p>Many types of objects in Python that qualify as being iterable, such as list, tuple, dictionary. In Python, the mechanism for iteratioin is based upon the following conventions:</p>
+                    <ul>
+                        <li>An <b>iterator</b> is an object that manages an iteration through a series of values. If variable, i, identifies an iterator object, then each call to the built-in function, next(i), produces a subsequent element from the underlying series, with StopIteration exception raised to indicate that there are no further elements.</li>
+                        <li>An <b>iterable</b> is an object, obj, that produces an iterator via syntax iter(obj).</li>
+                    </ul>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" contenteditable>
+x=[1,2,3,4]
+y=iter(x)
+print(next(y))
+print(next(y))
+print(next(y))
+print(next(y))
+print(next(y))
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+1
+2
+3
+4
+Traceback (most recent call last):
+  File "test.py", line 7, in &lt;module&gt;
+    print(next(y))
+StopIteration
+</code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <p>itertools</p>
+                    <div class="div-a">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+import itertools
+for item in itertools.repeat('hello world', 3):
+    print(item)
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-b">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+hello world
+hello world
+hello world
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-a">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+import itertools
+
+nums = itertools.count(0,2)
+for i in nums:
+    if i > 6:
+        break
+    print(i, end = " ")
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-b">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+0 2 4 6 
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-a">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+import itertools
+
+cycle_strings = itertools.cycle('ABC')
+i = 1
+for string in cycle_strings:
+    if i == 7:
+        break
+    print(string, end=" ")
+    i += 1
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-b">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+A B C A B C 
+</code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>The most convenient technique for creating iterators in Python is through the use of <b>Generators</b>.</p> A generator is implemented with a syntax that is very similar to a function, but instead of returning values, a <b>yield</b> statement is executed to indicate each element of the series.
+                        </li>
+                    </ul>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def yrange(n):
+    i = 0
+    while i < n:
+        yield i
+        i += 1 
+o = yrange(5)
+print(next(o))
+print(next(o))
+print(next(o))
+print(next(o))
+print(next(o))
+print(next(o))
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+0
+1
+2
+3
+4
+Traceback (most recent call last):
+  File "test.py", line 13, in &lt;module&gt;
+    print(next(o))
+StopIteration
+</code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> g = (x * x for x in range(4)) 
+>>> g
+&lt;generator object &lt;genexpr&gt; at 0x1022ef630&gt;
+
+>>> next(g)
+0
+>>> next(g)
+1
+>>> next(g)
+4
+>>> next(g)
+9
+>>> next(g)
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+StopIteration
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def yrange(n):
+    i = 0
+    while i < n:
+        yield i
+        i += 1 
+
+for x in yrange(5):
+    print(x)
+</code></pre>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">8.3 Return a Function</h2>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">Closure Function</li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def calc_sum(*args):
+    ax = 0
+    for n in args:
+        ax = ax + n
+    return ax
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return sum
+
+f = lazy_sum(1, 3, 5, 7, 9)
+print(f()) # 25
+print(type(f)) # function
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+f1 = lazy_sum(1, 3, 5, 7, 9)
+f2 = lazy_sum(1, 3, 5, 7, 9)
+print(f1==f2) #False
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Defining a closure function</p>
+                        </li>
+                        <li class="fragment">
+                            <p>When do we have a closure?</p>
+                            <ul>
+                                <li class="fragment">
+                                    <p>We must have a nested function (function inside a function).</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The nested function must refer to a value defined in the enclosing function.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The enclosing function must return the nested function.</p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment">
+                            <p>When to use closures?</p>
+                            <ul>
+                                <li class="fragment">
+                                    <p>Closures can avoid the use of global values and provides some form of data hiding. It can also provide an object oriented solution to the problem.</p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Example</h3>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def print_msg():
+    msg = "zen of python"
+    def printer():
+        return msg
+    return printer
+
+another = print_msg()
+print(another())
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def make_multiplier_of(n):
+    def multiplier(x):
+        return x * n
+    return multiplier
+
+times3 = make_multiplier_of(3)
+
+times5 = make_multiplier_of(5)
+
+print(times3(9))
+
+print(times5(3))
+
+print(times5(times3(2)))
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            Decorator Basics
+                        </li>
+                        <li>
+                            <p>Decorators are “wrappers”, which means that they let you execute code before and after the function they decorate without modifying the function itself.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable data-noescape>
+def my_shiny_new_decorator(a_function_to_decorate):
+    def the_wrapper_around_the_original_function():
+        <mark>print("Before the function runs")</mark> 
+        <mark>a_function_to_decorate()</mark>
+        <mark>print("After the function runs")</mark>
+
+    return the_wrapper_around_the_original_function
+
+def a_stand_alone_function():
+    print("I am a stand alone function, don't you dare modify me")
+
+a_stand_alone_function() 
+#outputs: 
+I am a stand alone function, don't you dare modify me
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+a_stand_alone_function_decorated = my_shiny_new_decorator(a_stand_alone_function)
+a_stand_alone_function_decorated()
+
+#outputs:
+Before the function runs
+I am a stand alone function, don't you dare modify me
+After the function runs
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+@my_shiny_new_decorator
+def another_stand_alone_function():
+    print("Leave me alone")
+
+another_stand_alone_function()  
+#outputs:  
+Before the function runs
+Leave me alone
+After the function runs
+
+# @decorator is just a shortcut
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def bread(func):
+    def wrapper():
+        print("</''''''\>")
+        func()
+        print("<\______/>")
+    return wrapper
+
+def ingredients(func):
+    def wrapper():
+        print("#tomatoes#")
+        func()
+        print("~salad~")
+    return wrapper
+
+def sandwich(food="--ham--"):
+    print(food)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+sandwich()
+#outputs: --ham--
+sandwich = bread(ingredients(sandwich))
+sandwich()
+#outputs:
+</''''''\>
+ #tomatoes#
+ --ham--
+ ~salad~
+<\______/>
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+@bread
+@ingredients # The order matters here.
+def sandwich(food="--ham--"):
+    print(food)
+
+sandwich()
+#outputs:
+</''''''\>
+ #tomatoes#
+ --ham--
+ ~salad~
+<\______/>
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Taking decorators to the next level</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Passing arguments to the decorated function</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def a_decorator_passing_arguments(function_to_decorate):
+    def a_wrapper_accepting_arguments(arg1, arg2):
+        print("I got args! Look: %s, %s" % (arg1, arg2))
+        function_to_decorate(arg1, arg2)
+    return a_wrapper_accepting_arguments
+
+@a_decorator_passing_arguments
+def print_full_name(first_name, last_name):
+    print("My name is %s, %s" % (first_name, last_name))
+
+print_full_name("Peter", "Venkman")
+# outputs:
+I got args! Look: Peter Venkman
+My name is Peter Venkman
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>If you're making general-purpose decorator--one you'll apply to any function or method, no matter its arguments--then just use *args, **kwargs:</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def a_decorator_passing_arbitrary_arguments(function_to_decorate):
+    # The wrapper accepts any arguments
+    def a_wrapper_accepting_arbitrary_arguments(*args, **kwargs):
+        print("Do I have args?:")
+        print(args)
+        print(kwargs)
+        function_to_decorate(*args, **kwargs)
+    return a_wrapper_accepting_arbitrary_arguments
+
+@a_decorator_passing_arbitrary_arguments
+def function_with_no_argument():
+    print("Python is cool, no argument here.")
+
+function_with_no_argument()
+#outputs
+Do I have args?:
+()
+{}
+Python is cool, no argument here.
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+@a_decorator_passing_arbitrary_arguments
+def function_with_arguments(a, b, c):
+    print(a, b, c)
+
+function_with_arguments(1,2,3)
+#outputs
+Do I have args?:
+(1, 2, 3)
+{}
+1 2 3 
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+@a_decorator_passing_arbitrary_arguments
+def function_with_named_arguments(a, b, c, platypus="Why not ?"):
+    print("Do {0}, {1} and {2} like platypus? {3}".format(a, b, c, platypus))
+
+function_with_named_arguments("Bill", "Linus", "Steve", platypus="Indeed!")
+#outputs
+Do I have args ? :
+('Bill', 'Linus', 'Steve')
+{'platypus': 'Indeed!'}
+Do Bill, Linus and Steve like platypus? Indeed! 
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p><a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484">Decorator Basics</a></p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="rf.png" style="height: 500pt"></div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="de.png" style="height: 500pt"></div>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2c3e50" style="color: white; text-align: left;">
+                    <h2 style="color: white">Summary</h2>
+                    <ul>
+                        <li>Functions</li>
+                        <ul>
+                            <li>Reading: Python for Everybody, Chapter 10.1-10.5, 10.7-10.8</li>
+                            <li>Reading: Python Crash Course, Chapter 8</li>
+                        </ul>
+                    </ul>
+                </section>
+            </section>
+        </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 960,
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.2,
+        maxScale: 1.5,
+
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 120,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: Reveal.navigateNext,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Parallax background image
+        parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // Parallax background size
+        parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+        // Number of pixels to move the parallax background per slide
+        // - Calculated automatically unless specified
+        // - Set to 0 to disable movement along an axis
+        parallaxBackgroundHorizontal: null,
+        parallaxBackgroundVertical: null,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        dependencies: [
+            { src: 'plugin/markdown/marked.js' },
+            { src: 'plugin/markdown/markdown.js' },
+            { src: 'plugin/notes/notes.js', async: true },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            // Zoom in and out with Alt+click
+            { src: 'plugin/zoom-js/zoom.js', async: true },
+
+            // Speaker notes
+            { src: 'plugin/notes/notes.js', async: true },
+
+            // MathJax
+            { src: 'plugin/math/math.js', async: true },
+            { src: 'plugin/line-numbers/line-numbers.js' }
+        ]
+    });
+    </script>
+</body>
+
+</html>
