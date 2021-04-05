@@ -470,25 +470,24 @@ def my_shiny_new_decorator(a_function_to_decorate):
         <mark>print("Before the function runs")</mark> 
         <mark>a_function_to_decorate()</mark>
         <mark>print("After the function runs")</mark>
-
     return the_wrapper_around_the_original_function
 
-def a_stand_alone_function():
-    print("I am a stand alone function, don't you dare modify me")
+def a_function():
+    print("I am a stand alone function.")
 
-a_stand_alone_function() 
+a_function() 
 #outputs: 
-I am a stand alone function, don't you dare modify me
+I am a stand alone function.
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-a_stand_alone_function_decorated = my_shiny_new_decorator(a_stand_alone_function)
-a_stand_alone_function_decorated()
+a_function_decorated = my_shiny_new_decorator(a_function)
+a_function_decorated()
 
 #outputs:
 Before the function runs
-I am a stand alone function, don't you dare modify me
+I am a stand alone function.
 After the function runs
 </code></pre>
                     </div>
