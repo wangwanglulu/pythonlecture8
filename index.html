@@ -484,8 +484,10 @@ I am a stand alone function.
                         <pre><code class="line-numbers" data-trim contenteditable>
 a_function_decorated = my_shiny_new_decorator(a_function)
 a_function_decorated()
-
-#outputs:
+</code></pre>
+                    </div>
+                                        <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
 Before the function runs
 I am a stand alone function.
 After the function runs
@@ -498,14 +500,15 @@ After the function runs
 @my_shiny_new_decorator
 def another_stand_alone_function():
     print("Leave me alone")
-
+# @decorator is just a shortcut
 another_stand_alone_function()  
-#outputs:  
+</code></pre>
+                    </div>
+                                        <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
 Before the function runs
 Leave me alone
 After the function runs
-
-# @decorator is just a shortcut
 </code></pre>
                     </div>
                 </section>
@@ -530,19 +533,31 @@ def sandwich(food="--ham--"):
     print(food)
 </code></pre>
                     </div>
+                    <div class="div-a">
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
+                        <pre><code class="line-numbers" contenteditable>
 sandwich()
-#outputs: --ham--
+
 sandwich = bread(ingredients(sandwich))
 sandwich()
-#outputs:
+
+
+</code></pre>
+                    </div>
+                    </div>
+                                        <div class="div-b">
+                    <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
+
+--ham--
+
 </''''''\>
  #tomatoes#
  --ham--
  ~salad~
 <\______/>
 </code></pre>
+                    </div>
                     </div>
                 </section>
                 <section>
@@ -554,7 +569,10 @@ def sandwich(food="--ham--"):
     print(food)
 
 sandwich()
-#outputs:
+</code></pre>
+                    </div>
+                                        <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
 </''''''\>
  #tomatoes#
  --ham--
@@ -585,7 +603,10 @@ def print_full_name(first_name, last_name):
     print("My name is %s, %s" % (first_name, last_name))
 
 print_full_name("Peter", "Venkman")
-# outputs:
+</code></pre>
+                    </div>
+                                        <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
 I got args! Look: Peter Venkman
 My name is Peter Venkman
 </code></pre>
@@ -613,7 +634,10 @@ def function_with_no_argument():
     print("Python is cool, no argument here.")
 
 function_with_no_argument()
-#outputs
+</code></pre>
+                    </div>
+                                        <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
 Do I have args?:
 ()
 {}
@@ -629,7 +653,10 @@ def function_with_arguments(a, b, c):
     print(a, b, c)
 
 function_with_arguments(1,2,3)
-#outputs
+</code></pre>
+                    </div>
+                                        <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
 Do I have args?:
 (1, 2, 3)
 {}
@@ -643,7 +670,10 @@ def function_with_named_arguments(a, b, c, platypus="Why not ?"):
     print("Do {0}, {1} and {2} like platypus? {3}".format(a, b, c, platypus))
 
 function_with_named_arguments("Bill", "Linus", "Steve", platypus="Indeed!")
-#outputs
+</code></pre>
+                    </div>
+                                        <div class="fragment">
+                        <pre><code class="output" data-trim contenteditable>
 Do I have args ? :
 ('Bill', 'Linus', 'Steve')
 {'platypus': 'Indeed!'}
