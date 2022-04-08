@@ -3,694 +3,517 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lecture 8</title>
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/white.css">
-    <link rel="stylesheet" href="css/theme/custom.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css" id="theme">
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/googlecode.css">
-    <!-- Printing and PDF exports -->
-    <script>
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-    document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
+    <link rel="stylesheet" href="plugin/highlight/github.css">
+    <link rel="stylesheet" href="plugin/chalkboard/style.css">
+    <link rel="stylesheet" href="plugin/customcontrols/style.css">
+    <link rel="stylesheet" href="plugin/menu/font-awesome/css/all.css">
 </head>
 
 <body>
     <div class="reveal" style="background-color: #fff;">
         <div class="slides">
             <section data-background-video="bgm.mp4" data-background-video-loop data-background-video-muted style="text-align: left;">
-                <h2 style="color: white">Python Programming</h2>
-                <h5 style="color: white">Lecture 8 Advanced Features</h5>
+                <h1 style="color: white">Python Programming</h1>
+                <h3 style="color: white">Lecture 8 Complex Systems</h3>
             </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">8.1 Additional Python Conveniences</h2>
+                    <h2 style="color: white">8.1 Complex Systems</h2>
                 </section>
                 <section>
-                    <h5>Comprehension Syntax</h5>
+                    <h3>Complex Systems (复杂系统)</h3>
                     <ul>
                         <li class="fragment">
-                            <p>Four ways of creating a list</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def test1():
-    l = []
-    for i in range(100):
-        l = l + [i]
-
-def test2():
-    l = []
-    for i in range(100):
-        l.append(i)
-
-def test3():
-    l = list(range(100))
-
-def test4():
-    l = [i for i in range(100)]
-</code></pre>
-                    </div>
-                    <p class="fragment">[ expression <b>for</b> value <b>in</b> iterable <b>if</b> condition ]</p>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> [x * x for x in range(1, 11)]
-[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> [x * x for x in range(1, 11) if x % 2 == 0]
-[4, 16, 36, 64, 100]
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> [m + n for m in 'ABC' for n in 'XYZ']
-['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> d = {'x': 'A', 'y': 'B', 'z': 'C' }
->>> [k + '=' + v for k, v in d.items()]
-['y=B', 'x=A', 'z=C']
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> L = ['Hello', 'World', 'IBM', 'Apple']
->>> [s.lower() for s in L]
-['hello', 'world', 'ibm', 'apple']
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>map()</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def f(x):
-    return x * x
-
-y = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])    
-print(list(y))
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-[1, 4, 9, 16, 25, 36, 49, 64, 81]
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> print(list(map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9])))
-['1', '2', '3', '4', '5', '6', '7', '8', '9']
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <h3>Anonymous function: lambda</h3>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def add( x, y ):
-    return x + y
- 
-lambda x, y: x + y
- 
-lambda x, y = 2: x + y
-lambda *z: z
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
- 
->>> a = lambda x, y: x + y
->>> a( 1, 3 )
-4
->>> b = lambda x, y = 2: x + y
->>> b( 1 )
-3
->>> b( 1, 3 )
-4
->>> c = lambda *z: z
->>> c( 10, 'test')
-(10, 'test')
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Sometimes the anonymous function is convenient.</p>
+                            A complex system is a system composed of many components which may interact with each other.
                         </li>
                         <li class="fragment">
-                            <p>It has only one expression. (You do not have to use <b>return</b>)</p>
+                            These parts are often quite simple to understand and to model individually.
+                        </li>
+                        <li class="fragment">
+                            <p>When these parts are put together, most complex systems display surprising and unpredictable behavior that can be difficult to explain just by looking at the parts separately.
+                        </li>
+                        <li class="fragment">
+                            <p>Examples of complex systems are Earth's global climate, organisms, the human brain, infrastructure such as power grid, transportation or communication systems, complex software and electronic systems, social and economic organizations (like cities), an ecosystem, a living cell, and ultimately the entire universe.
                         </li>
                     </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-sum = lambda arg1, arg2: arg1 + arg2
-
-print ("The total is : ", sum( 10, 20 ))
-print ("The total is : ", sum( 20, 20 ))
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
-[1, 4, 9, 16, 25, 36, 49, 64, 81]
-</code></pre>
-                    </div>
-                </section>
-            </section>
-            <section>
-                <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">8.2 Iterators and Generators</h2>
                 </section>
                 <section>
-                    <h5>Iterator</h5>
-                    <p>Many types of objects in Python that qualify as being iterable, such as list, tuple, dictionary. In Python, the mechanism for iteratioin is based upon the following conventions:</p>
-                    <ul>
-                        <li>An <b>iterator</b> is an object that manages an iteration through a series of values. If variable, i, identifies an iterator object, then each call to the built-in function, next(i), produces a subsequent element from the underlying series, with StopIteration exception raised to indicate that there are no further elements.</li>
-                        <li>An <b>iterable</b> is an object, obj, that produces an iterator via syntax iter(obj).</li>
-                    </ul>
-                    <div class="div-c">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" contenteditable>
-x=[1,2,3,4]
-y=iter(x)
-print(next(y))
-print(next(y))
-print(next(y))
-print(next(y))
-print(next(y))
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-1
-2
-3
-4
-Traceback (most recent call last):
-  File "test.py", line 7, in &lt;module&gt;
-    print(next(y))
-StopIteration
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <p>itertools</p>
-                    <div class="div-a">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-import itertools
-for item in itertools.repeat('hello world', 3):
-    print(item)
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-b">
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-hello world
-hello world
-hello world
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-a">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-import itertools
-
-nums = itertools.count(0,2)
-for i in nums:
-    if i > 6:
-        break
-    print(i, end = " ")
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-b">
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-0 2 4 6 
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-a">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-import itertools
-
-cycle_strings = itertools.cycle('ABC')
-i = 1
-for string in cycle_strings:
-    if i == 7:
-        break
-    print(string, end=" ")
-    i += 1
-</code></pre>
-                        </div>
-                    </div>
-                    <div class="div-b">
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-A B C A B C 
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section>
+                    <h3>Example 1: bird flock (Complex Adaptive Systems, 复杂适应系统)</h3>
                     <ul>
                         <li class="fragment">
-                            <p>The most convenient technique for creating iterators in Python is through the use of <b>Generators</b>.</p> A generator is implemented with a syntax that is very similar to a function, but instead of returning values, a <b>yield</b> statement is executed to indicate each element of the series.
+                            The rules are simple!
+                        </li>
+                        <li class="fragment">
+                            <b>There is no "leader" or "control".</b>
+                        </li>
+                        <li class="fragment">
+                            1. Stay together; 2. Do not crash into each other; 3. Avoid predators and obstacles
+                        </li>
+                    </ul>
+                    <div class="fragment"><img data-src="birds.jpeg" style="height: 250pt"></div>
+                </section>
+                <section>
+                    <h3>Example 2: butterfly effect (Chaos Theory, 混沌理论)</h3>
+                    <ul>
+                        <li class="fragment">
+                            In chaos theory, the butterfly effect is the sensitive dependence on initial conditions in which a small change in one state of a deterministic nonlinear system can result in large differences in a later state.
+                        </li>
+                        <li class="fragment">
+                            The term is closely associated with the work of mathematician and meteorologist Edward Norton Lorenz. He noted that butterfly effect is derived from the metaphorical example of the details of a tornado being influenced by minor perturbations such as a distant butterfly flapping its wings several weeks earlier.
+                        </li>
+                    </ul>
+                    <div class="fragment"><img data-src="butterfly.jpeg" style="height: 250pt"></div>
+                </section>
+                <section>
+                    <h3>Example 3: pattern formulation (Fractal Theory, 分形理论)</h3>
+                    <ul>
+                        <li class="fragment">
+                            In mathematics, fractal is a term used to describe geometric shapes containing detailed structure at arbitrarily small scales, usually having a fractal dimension strictly exceeding the topological dimension.
                         </li>
                     </ul>
                     <div class="div-c">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-def yrange(n):
-    i = 0
-    while i < n:
-        yield i
-        i += 1 
-o = yrange(5)
-print(next(o))
-print(next(o))
-print(next(o))
-print(next(o))
-print(next(o))
-print(next(o))
-</code></pre>
-                        </div>
+                        <div class="fragment"><img data-src="f1.jpg" style="height: 250pt"></div>
                     </div>
                     <div class="div-d">
-                        <div class="fragment">
-                            <pre><code class="output" data-trim contenteditable>
-0
-1
-2
-3
-4
-Traceback (most recent call last):
-  File "test.py", line 13, in &lt;module&gt;
-    print(next(o))
-StopIteration
-</code></pre>
-                        </div>
+                        <div class="fragment"><img data-src="f2.jpg" style="height: 250pt"></div>
                     </div>
                 </section>
                 <section>
+                    <h3>Application</h3>
+                    <ul>
+                        <li class="fragment">
+                            Complex theory:
+                        </li>
+                        <ul>
+                            <li class="fragment">
+                                Reduce the problem and understand the rule
+                            </li>
+                            <li class="fragment">
+                                build up the model and simulate the phenomenon
+                            </li>
+                            <li class="fragment">
+                                Predict the future
+                            </li>
+                        </ul>
+                        <li class="fragment">
+                            Disciplines: statistical physics, information theory, nonlinear dynamics, anthropology, computer science, meteorology, sociology, economics, psychology, and biology.
+                        </li>
+                        <li class="fragment">
+                            The 2021 Nobel Prize in Physics was awarded to Syukuro Manabe, Klaus Hasselmann, and Giorgio Parisi for their work to understand complex systems. Their work was used to create more accurate computer models of the effect of global warming on the Earth's climate.
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Can complex system be Designed?</h3>
+                    <ul>
+                        <li class="fragment">
+                            <a href="https://web.archive.org/web/20200519072847/https://www.complexity-explorables.org/slides/critically-inflammatory/" target="_blank">Forest Fire</a></li>
+                        <li class="fragment">
+                            <a href="https://web.archive.org/web/20200518005219/https://www.complexity-explorables.org/slides/i-herd-you/" target="_blank">Epidemics and Herd Immunity</a></li>
+                        <li class="fragment">Cellular Automaton (元胞自动机)</li>
+                    </ul>
+                </section>
+                <!--
+                <section>
+                    <h3>Games of Emergence</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>The game in Lecture 2 might be boring. Why?</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Each challenge is a unique puzzle, and each puzzle has a unique action that solves it.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Games of emergence have a high replay value because the challenges and possible actions that occur while playing are different every time.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>It is very hard to predict whether interesting gameplay will emerge from a particular game simply by looking at the rules.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>It should be clear that creating emergence is not simply a matter of having many rules. You cannot create a more interesting game simply by adding more rules. In fact, sometimes it is more effective to reduce the number of rules to create a system that displays truly interesting and emergent gameplay.</p>
+                        </li>
+                        </ul>
+                   
+                </section>
+            -->
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">8.2 Cellular Automaton</h2>
+                </section>
+                <section>
+                    <h3>Cellular Automaton (元胞自动机)</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>At the boundary of mathematics, computer science, and games lies a peculiar field that studies <b>cellular automaton</b>.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Cellular automaton is a simple set of rules governing the appearance of spaces, or cells, in a line or on a grid. </p>
+                        </li>
+                        <li class="fragment">
+                            <p>Each cell may be either black or white. The rules determine what causes a cell to change from black to white (or vice versa) and how the color of a cell influences the cells around it.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Mathematicians think of such a collection of rules as a hypothetical machine that operates by itself without human intervention. This is why they are called automata.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>A cellular automaton starts with its cells in a given configuration (some white, some black) and then applies the rules to each cell to determine whether its color should change.
+                            </p>
+                        </li>
+                        <li class="fragment">
+                            <p>It does not change a cell immediately; it checks every cell in the grid first, marks the ones to be changed, and then changes them all before the next iteration. Then it repeats the process. Each iteration is called a <b>generation</b>.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>British scientist Stephen Wolfram has created a simple cellular automaton that exhibits emergent behavior.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>He was named an inaugural fellow of the American Mathematical Society. he is the founder and CEO of the software company <b>Wolfram </b> Research where he worked as chief designer of Mathematica and the Wolfram Alpha answer engine.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment"><img data-src="wolfram.jpeg" style="height: 200pt"></div>
+                </section>
+                <section>
+                    <h3>The simple cellular automaton</h3>
+                    <div class="fragment"><img data-src="rule.png" style="height: 100pt"></div>
+                    <ul>
+                        <li class="fragment">
+                            <p>It displays one set of possible rules and the resulting, surprisingly complex pattern that is created by printing each new generation of the system under the previous one. It begins with one black cell and all the rest white.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Notice that even though there is nothing random in the rules, this cellular automaton produces a pattern with distinctive and apparently random features.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="firstca.png" style="height: 500pt"></div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Wolfram described his work in detail in his book A New Kind of Science (2002).</p>
+                            <ul>
+                                <li class="fragment">
+                                    <p>They must consist of simple cells whose rules are defined locally.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The system must allow for long-range communication.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The level of activity of the cells is a good indicator for the complexity of the behavior of the system.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>Cellular automata show us that the threshold for complexity is surprisingly low.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>Let's build this simple model with Python.</p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> g = (x * x for x in range(4)) 
->>> g
-&lt;generator object &lt;genexpr&gt; at 0x1022ef630&gt;
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+import os
 
->>> next(g)
-0
->>> next(g)
-1
->>> next(g)
-4
->>> next(g)
-9
->>> next(g)
-Traceback (most recent call last):
-  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
-StopIteration
+width = 100
+height = 1
+screen = []
 </code></pre>
                     </div>
+                    <p class="fragment">Step 1: Initialization</p>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def yrange(n):
-    i = 0
-    while i < n:
-        yield i
-        i += 1 
-
-for x in yrange(5):
-    print(x)
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def Init():
+    for i in range(height):
+        line = []
+        for j in range(width):
+            line.append(' ')
+        screen.append(line)
+    screen[0][50]='#'
 </code></pre>
                     </div>
+                    <p class="fragment">Step 2: Show the screen</p>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def PrintScreen():
+    for i in range(len(screen)):
+        for j in range(width):
+            print(screen[i][j] + ' ', end='')
+        print('|')
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Step 3: Add a new generation</p>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def Update():
+    s = len(screen); line = []
+    for j in range(width):
+        line.append(' ')
+    screen.append(line)
+    for j in range(width-1):
+        if screen[s-1][j-1]=='#' and screen[s-1][j]=='#' and screen[s-1][j+1]=='#':
+            screen[s][j] = ' '
+        elif screen[s-1][j-1]=='#' and screen[s-1][j]=='#' and screen[s-1][j+1]==' ':
+            screen[s][j] = ' '
+        elif screen[s-1][j-1]=='#' and screen[s-1][j]==' ' and screen[s-1][j+1]=='#':
+            screen[s][j] = ' '
+        elif screen[s-1][j-1]=='#' and screen[s-1][j]==' ' and screen[s-1][j+1]==' ':
+            screen[s][j] = '#'
+        elif screen[s-1][j-1]==' ' and screen[s-1][j]=='#' and screen[s-1][j+1]=='#':
+            screen[s][j] = '#'
+        elif screen[s-1][j-1]==' ' and screen[s-1][j]=='#' and screen[s-1][j+1]==' ':
+            screen[s][j] = '#'
+        elif screen[s-1][j-1]==' ' and screen[s-1][j]==' ' and screen[s-1][j+1]=='#':
+            screen[s][j] = '#'
+        elif screen[s-1][j-1]==' ' and screen[s-1][j]==' ' and screen[s-1][j+1]==' ':
+            screen[s][j] = ' '
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Step 4: Console</p>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def Start():
+    os.system("cls")
+    print('== Game of Life ==')
+    print('Press any key...')
+    input()
+    os.system("cls")
+    Init()
+    PrintScreen()
+    c = input()
+    while c!= 'q':
+        os.system("cls")
+        Update()
+        PrintScreen()   
+        c = input()
+    print('End')
+
+Start()
+</code></pre>
+                    </div>
+                    <p class="fragment">Command line</p>
                 </section>
             </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">8.3 Return a Function</h2>
+                    <h2 style="color: white">8.3 Game of Life</h2>
                 </section>
                 <section>
+                    <h3>Game of Life (生命演化游戏)</h3>
                     <ul>
-                        <li class="fragment">Closure Function</li>
+                        <li class="fragment">
+                            <p>Probably the most famous cellular automaton was invented by John Conway and is called the Game of Life.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Conway was a Professor Emeritus of Mathematics at Princeton University in New Jersey.</p>
+                        </li>
                     </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def calc_sum(*args):
-    ax = 0
-    for n in args:
-        ax = ax + n
-    return ax
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def lazy_sum(*args):
-    def sum():
-        ax = 0
-        for n in args:
-            ax = ax + n
-        return ax
-    return sum
-
-f = lazy_sum(1, 3, 5, 7, 9)
-print(f()) # 25
-print(type(f)) # function
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-f1 = lazy_sum(1, 3, 5, 7, 9)
-f2 = lazy_sum(1, 3, 5, 7, 9)
-print(f1==f2) #False
-</code></pre>
-                    </div>
+                    <div class="fragment"><img data-src="conway.jpg" style="height: 200pt"></div>
                 </section>
                 <section>
                     <ul>
                         <li class="fragment">
-                            <p>Defining a closure function</p>
+                            <p>Conway's automaton consists of cells that are laid out on a two-dimensional grid.</p>
                         </li>
                         <li class="fragment">
-                            <p>When do we have a closure?</p>
-                            <ul>
-                                <li class="fragment">
-                                    <p>We must have a nested function (function inside a function).</p>
-                                </li>
-                                <li class="fragment">
-                                    <p>The nested function must refer to a value defined in the enclosing function.</p>
-                                </li>
-                                <li class="fragment">
-                                    <p>The enclosing function must return the nested function.</p>
-                                </li>
-                            </ul>
+                            <p>this grid goes on indefinitely in all directions. Each cell on the grid has eight neighbors: the cells that surround it orthogonally and diagonally. Each cell can be in two different states: It is either dead or alive.</p>
                         </li>
                         <li class="fragment">
-                            <p>When to use closures?</p>
-                            <ul>
-                                <li class="fragment">
-                                    <p>Closures can avoid the use of global values and provides some form of data hiding. It can also provide an object oriented solution to the problem.</p>
-                                </li>
-                            </ul>
+                            <p>In most examples, dead cells are rendered white, while live cells are colored black.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Rules</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>A live cell that has fewer than two live neighbors dies from loneliness.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>A live cell that has more than three live neighbors dies from overcrowding.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>A live cell that has two or three live neighbors stays alive.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>A dead cell that has exactly three live neighbors becomes alive.</p>
                         </li>
                     </ul>
                 </section>
                 <section>
                     <h3>Example</h3>
+                    <div class="fragment"><img data-src="iteration.png" style="height: 100pt"></div>
+                    <ul>
+                        <li class="fragment">
+                            <p>When set into motion, the Game of Life usually has quite chaotic results, with a lot of activity exploding from its original live cells.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Demo: Game of Life (Random)</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Frequently after a number of iterations the Game of Life settles in a more or less stable configuration, sometimes with a few groups of cells that oscillate between two states.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def print_msg():
-    msg = "zen of python"
-    def printer():
-        return msg
-    return printer
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+import os
+import random
 
-another = print_msg()
-print(another())
+width = 60
+height = 60
+screen = []
 </code></pre>
                     </div>
+                    <p class="fragment">Step 1: Initialization</p>
                     <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def make_multiplier_of(n):
-    def multiplier(x):
-        return x * n
-    return multiplier
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def Init():
+    for i in range(height):
+        line = []
+        for j in range(width):
+            if random.random() > 0.8:
+                line.append('#')
+            else:
+                line.append(' ')
+        screen.append(line)
+</code></pre>
+                    </div>
+                    <p class="fragment">Step 2: Show the screen</p>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def PrintScreen():
+    for i in range(height):
+        for j in range(width):
+            print(screen[i][j] + ' ', end='')
+        print()
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Step 3: Get cells</p>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def TryGetCell(i, j):
+    i = i % height
+    j = j % width
+    return screen[i][j]
+</code></pre>
+                    </div>
+                    <p class="fragment">Step 4: Count cells nearby</p>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def GetNearbyCellsCount(i, j):
+    nearby = []
+    nearby.append(TryGetCell(i - 1, j - 1))
+    nearby.append(TryGetCell(i - 1, j))
+    nearby.append(TryGetCell(i - 1, j + 1))
+    nearby.append(TryGetCell(i, j - 1))
+    nearby.append(TryGetCell(i, j + 1))
+    nearby.append(TryGetCell(i + 1, j - 1))
+    nearby.append(TryGetCell(i + 1, j))
+    nearby.append(TryGetCell(i + 1, j + 1))
+    num = 0
+    for x in nearby:
+        if x == '#':
+            num = num + 1
+    return num
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Step 5: Update</p>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def Update():
+    global screen
+    newScreen = []
+    for i in range(height):
+        line = []
+        for j in range(width):
+            line.append(' ')
+        newScreen.append(line)
+    for i in range(height):
+        for j in range(width):
+            count = GetNearbyCellsCount(i, j)
+            if count == 3:
+                newScreen[i][j] = '#'
+            elif count < 2 or count > 3:
+                newScreen[i][j] = ' '
+            else:
+                newScreen[i][j] = screen[i][j]    
+    screen = newScreen
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Step 6: Console</p>
+                    <div class="fragment">
+                        <pre><code class="language-Python" data-line-numbers data-trim contenteditable>
+def Start():
+    os.system("cls")
+    print('== Game of Life ==')
+    print('Press any key...')
+    input()
+    os.system("cls")
+    Init()
+    PrintScreen()
+    c = input()
+    while c!= 'q':
+        os.system("cls")
+        Update()
+        PrintScreen()   
+        c = input()
+    print('End')
 
-times3 = make_multiplier_of(3)
-
-times5 = make_multiplier_of(5)
-
-print(times3(9))
-
-print(times5(3))
-
-print(times5(times3(2)))
+Start()
 </code></pre>
                     </div>
                 </section>
                 <section>
                     <ul>
                         <li class="fragment">
-                            Decorator Basics
+                            <p>One of the earliest questions that the researchers studying the Game of Life asked themselves was this: "Is there an initial configuration of live cells that expands forever?"</p>
                         </li>
-                        <li>
-                            <p>Decorators are “wrappers”, which means that they let you execute code before and after the function they decorate without modifying the function itself.</p>
+                        <li class="fragment">
+                            <p><b>glider</b></p>
+                        </li>
+                        <div class="fragment"><img data-src="glider.png" style="height: 100pt"></div>
+                        <li class="fragment">
+                            <p>Demo: glider</p>
                         </li>
                     </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable data-noescape>
-def my_shiny_new_decorator(a_function_to_decorate):
-    def the_wrapper_around_the_original_function():
-        <mark>print("Before the function runs")</mark> 
-        <mark>a_function_to_decorate()</mark>
-        <mark>print("After the function runs")</mark>
-    return the_wrapper_around_the_original_function
-
-def a_function():
-    print("I am a stand alone function.")
-
-a_function() 
-#outputs: 
-I am a stand alone function.
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-a_function_decorated = my_shiny_new_decorator(a_function)
-a_function_decorated()
-</code></pre>
-                    </div>
-                                        <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-Before the function runs
-I am a stand alone function.
-After the function runs
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-@my_shiny_new_decorator
-def another_stand_alone_function():
-    print("Leave me alone")
-# @decorator is just a shortcut
-another_stand_alone_function()  
-</code></pre>
-                    </div>
-                                        <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-Before the function runs
-Leave me alone
-After the function runs
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def bread(func):
-    def wrapper():
-        print("</''''''\>")
-        func()
-        print("<\______/>")
-    return wrapper
-
-def ingredients(func):
-    def wrapper():
-        print("#tomatoes#")
-        func()
-        print("~salad~")
-    return wrapper
-
-def sandwich(food="--ham--"):
-    print(food)
-</code></pre>
-                    </div>
-                    <div class="div-a">
-                    <div class="fragment">
-                        <pre><code class="line-numbers" contenteditable>
-sandwich()
-
-sandwich = bread(ingredients(sandwich))
-sandwich()
-
-
-</code></pre>
-                    </div>
-                    </div>
-                                        <div class="div-b">
-                    <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-
---ham--
-
-</''''''\>
- #tomatoes#
- --ham--
- ~salad~
-<\______/>
-</code></pre>
-                    </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-@bread
-@ingredients # The order matters here.
-def sandwich(food="--ham--"):
-    print(food)
-
-sandwich()
-</code></pre>
-                    </div>
-                                        <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-</''''''\>
- #tomatoes#
- --ham--
- ~salad~
-<\______/>
-</code></pre>
-                    </div>
                 </section>
                 <section>
                     <ul>
                         <li class="fragment">
-                            <p>Taking decorators to the next level</p>
+                            <p>Glider gun</p>
                         </li>
-                        <li class="fragment">
-                            <p>Passing arguments to the decorated function</p>
-                        </li>
+                        <div class="fragment"><img data-src="glidergun.png" style="height: 150pt"></div>
+                        <div class="fragment"><img data-src="glider_gun.gif" style="height: 150pt"></div>
                     </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def a_decorator_passing_arguments(function_to_decorate):
-    def a_wrapper_accepting_arguments(arg1, arg2):
-        print("I got args! Look: %s, %s" % (arg1, arg2))
-        function_to_decorate(arg1, arg2)
-    return a_wrapper_accepting_arguments
-
-@a_decorator_passing_arguments
-def print_full_name(first_name, last_name):
-    print("My name is %s, %s" % (first_name, last_name))
-
-print_full_name("Peter", "Venkman")
-</code></pre>
-                    </div>
-                                        <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-I got args! Look: Peter Venkman
-My name is Peter Venkman
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>If you're making general-purpose decorator--one you'll apply to any function or method, no matter its arguments--then just use *args, **kwargs:</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def a_decorator_passing_arbitrary_arguments(function_to_decorate):
-    # The wrapper accepts any arguments
-    def a_wrapper_accepting_arbitrary_arguments(*args, **kwargs):
-        print("Do I have args?:")
-        print(args)
-        print(kwargs)
-        function_to_decorate(*args, **kwargs)
-    return a_wrapper_accepting_arbitrary_arguments
-
-@a_decorator_passing_arbitrary_arguments
-def function_with_no_argument():
-    print("Python is cool, no argument here.")
-
-function_with_no_argument()
-</code></pre>
-                    </div>
-                                        <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-Do I have args?:
-()
-{}
-Python is cool, no argument here.
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-@a_decorator_passing_arbitrary_arguments
-def function_with_arguments(a, b, c):
-    print(a, b, c)
-
-function_with_arguments(1,2,3)
-</code></pre>
-                    </div>
-                                        <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-Do I have args?:
-(1, 2, 3)
-{}
-1 2 3 
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-@a_decorator_passing_arbitrary_arguments
-def function_with_named_arguments(a, b, c, platypus="Why not ?"):
-    print("Do {0}, {1} and {2} like platypus? {3}".format(a, b, c, platypus))
-
-function_with_named_arguments("Bill", "Linus", "Steve", platypus="Indeed!")
-</code></pre>
-                    </div>
-                                        <div class="fragment">
-                        <pre><code class="output" data-trim contenteditable>
-Do I have args ? :
-('Bill', 'Linus', 'Steve')
-{'platypus': 'Indeed!'}
-Do Bill, Linus and Steve like platypus? Indeed! 
-</code></pre>
-                    </div>
-                    <ul>
-                        <li class="fragment">
-                            <p><a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484">Decorator Basics</a></p>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <div class="fragment"><img data-src="rf.png" style="height: 500pt"></div>
-                </section>
-                <section>
-                    <div class="fragment"><img data-src="de.png" style="height: 500pt"></div>
                 </section>
             </section>
             <section>
@@ -699,7 +522,7 @@ Do Bill, Linus and Steve like platypus? Indeed!
                     <ul>
                         <li>Functions</li>
                         <ul>
-                            <li>Reading: Python for Everybody, Chapter 10.1-10.5, 10.7-10.8</li>
+                            <li>Reading: Python for Everybody, Chapter 4</li>
                             <li>Reading: Python Crash Course, Chapter 8</li>
                         </ul>
                     </ul>
@@ -707,144 +530,51 @@ Do Bill, Linus and Steve like platypus? Indeed!
             </section>
         </div>
     </div>
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.js"></script>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/search/search.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/math/math.js"></script>
+    <script src="plugin/zoom_old/zoom_old.js"></script>
+    <script src="plugin/chalkboard/plugin.js"></script>
+    <script src="plugin/customcontrols/plugin.js"></script>
     <script>
-    // More info about config & dependencies:
-    // - https://github.com/hakimel/reveal.js#configuration
-    // - https://github.com/hakimel/reveal.js#dependencies
+    // Also available as an ES module, see:
+    // https://revealjs.com/initialization/
     Reveal.initialize({
-        // The "normal" size of the presentation, aspect ratio will be preserved
-        // when the presentation is scaled to fit different resolutions. Can be
-        // specified using percentage units.
-        width: 960,
-        height: 700,
-
-        // Factor of the display size that should remain empty around the content
-        margin: 0.1,
-
-        // Bounds for smallest/largest possible scale to apply to content
-        minScale: 0.2,
-        maxScale: 1.5,
-
-        // Display controls in the bottom right corner
         controls: true,
-
-        // Display a presentation progress bar
         progress: true,
-
-        // Set default timing of 2 minutes per slide
-        defaultTiming: 120,
-
-        // Display the page number of the current slide
-        slideNumber: true,
-
-        // Push each slide change to the browser history
-        history: false,
-
-        // Enable keyboard shortcuts for navigation
-        keyboard: true,
-
-        // Enable the slide overview mode
-        overview: true,
-
-        // Vertical centering of slides
         center: true,
+        hash: true,
+        customcontrols: {
+            controls: [{
+                    id: 'toggle-overview',
+                    title: 'Toggle overview (O)',
+                    icon: '<i class="fa fa-th"></i>',
+                    action: 'Reveal.toggleOverview();'
+                },
+                {
+                    icon: '<i class="fa fa-pen-square"></i>',
+                    title: 'Toggle chalkboard (B)',
+                    action: 'RevealChalkboard.toggleChalkboard();'
+                },
+                {
+                    icon: '<i class="fa fa-pen"></i>',
+                    title: 'Toggle notes canvas (C)',
+                    action: 'RevealChalkboard.toggleNotesCanvas();'
+                }
+            ]
+        },
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealChalkboard, RevealCustomControls, RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX],
 
-        // Enables touch navigation on devices with touch input
-        touch: true,
 
-        // Loop the presentation
-        loop: false,
 
-        // Change the presentation direction to be RTL
-        rtl: false,
-
-        // Randomizes the order of slides each time the presentation loads
-        shuffle: false,
-
-        // Turns fragments on and off globally
-        fragments: true,
-
-        // Flags if the presentation is running in an embedded mode,
-        // i.e. contained within a limited portion of the screen
-        embedded: false,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: true,
-
-        // Flags if speaker notes should be visible to all viewers
-        showNotes: false,
-
-        // Global override for autolaying embedded media (video/audio/iframe)
-        // - null: Media will only autoplay if data-autoplay is present
-        // - true: All media will autoplay, regardless of individual setting
-        // - false: No media will autoplay, regardless of individual setting
-        autoPlayMedia: null,
-
-        // Number of milliseconds between automatically proceeding to the
-        // next slide, disabled when set to 0, this value can be overwritten
-        // by using a data-autoslide attribute on your slides
-        autoSlide: 0,
-
-        // Stop auto-sliding after user input
-        autoSlideStoppable: true,
-
-        // Use this method for navigation when auto-sliding
-        autoSlideMethod: Reveal.navigateNext,
-
-        // Enable slide navigation via mouse wheel
-        mouseWheel: false,
-
-        // Hides the address bar on mobile devices
-        hideAddressBar: true,
-
-        // Opens links in an iframe preview overlay
-        previewLinks: false,
-
-        // Transition style
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-        // Transition speed
-        transitionSpeed: 'default', // default/fast/slow
-
-        // Transition style for full page slide backgrounds
-        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
-
-        // Number of slides away from the current that are visible
-        viewDistance: 3,
-
-        // Parallax background image
-        parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
-
-        // Parallax background size
-        parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
-
-        // Number of pixels to move the parallax background per slide
-        // - Calculated automatically unless specified
-        // - Set to 0 to disable movement along an axis
-        parallaxBackgroundHorizontal: null,
-        parallaxBackgroundVertical: null,
-
-        // The display mode that will be used to show slides
-        display: 'block',
-
-        dependencies: [
-            { src: 'plugin/markdown/marked.js' },
-            { src: 'plugin/markdown/markdown.js' },
-            { src: 'plugin/notes/notes.js', async: true },
-            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-            // Zoom in and out with Alt+click
-            { src: 'plugin/zoom-js/zoom.js', async: true },
-
-            // Speaker notes
-            { src: 'plugin/notes/notes.js', async: true },
-
-            // MathJax
-            { src: 'plugin/math/math.js', async: true },
-            { src: 'plugin/line-numbers/line-numbers.js' }
-        ]
+    });
+    Reveal.configure({
+        pdfSeparateFragments: false
     });
     </script>
 </body>
